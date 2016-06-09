@@ -10,12 +10,13 @@ public class Bullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(transform.forward * 20 * Time.deltaTime);
+		transform.Translate(Vector3.forward * 20 * Time.deltaTime);
 	}
 
 	void OnTriggerEnter(Collider col) {
 		print(col);
 		if (col.gameObject.tag == "Enemy") {
+			ScoreBoard.instance.AddScore(100);
 			Destroy(col.gameObject);
 		}
 	}

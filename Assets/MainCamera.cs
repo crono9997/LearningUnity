@@ -9,6 +9,14 @@ public class MainCamera : MonoBehaviour {
 	void Start () {
 	
 	}
+
+	void Update() {
+		if(Input.GetKey(KeyCode.Q)) {
+			transform.RotateAround(mc.transform.position, new Vector3(0, 1, 0), -90 * Time.deltaTime);
+		} else if(Input.GetKey(KeyCode.E)) {
+			transform.RotateAround(mc.transform.position, new Vector3(0, 1, 0), 90 * Time.deltaTime);
+		}
+	}
 	
 	// Update is called once per frame
 	void LateUpdate () {

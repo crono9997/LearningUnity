@@ -7,6 +7,7 @@ public class MainCharacter : MonoBehaviour {
 
 	public GameObject enemy;
 	public GameObject bullet;
+	public GameObject body;
 
 	// Use this for initialization
 	void Start () {
@@ -18,26 +19,34 @@ public class MainCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Vector3 cameraNormal = (Camera.main.transform.position - transform.position).normalized * -1;
+
+
+
+
+
 		if(Input.GetKey(KeyCode.A)) {
-			transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
+			transform.Translate(Quaternion.Euler(0, 90, 0) * cameraNormal * -speed * Time.deltaTime);
 		} else if(Input.GetKey(KeyCode.D)) {
-			transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
+			transform.Translate(Quaternion.Euler(0, 90, 0) * cameraNormal * speed * Time.deltaTime);
 		}
 
 		if(Input.GetKey(KeyCode.W)) {
-			transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+			transform.Translate(cameraNormal * speed * Time.deltaTime);
 		} else if(Input.GetKey(KeyCode.S)) {
-			transform.Translate(new Vector3(0, 0, -speed * Time.deltaTime));
+			transform.Translate(cameraNormal * -speed * Time.deltaTime);
 		}
 
 		if(Input.GetKeyDown(KeyCode.Space)) {
 			Rigidbody rb = GetComponent<Rigidbody>();
-			rb.AddForce(new Vector3(0, 400, 0));
+			rb.AddForce(new Vector3(0, 800, 0));
 		}
 
+		body.transform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
 		if(Input.GetKeyDown(KeyCode.J)) {
-			GameObject go = (GameObject)Instantiate(bullet, transform.position + new Vector3(0, -0.5f, 0), transform.rotation);
+			GameObject go = (GameObject)Instantiate(bullet, transform.position + new Vector3(0, -0.5f, 0), body.transform.rotation);
 		}
+
 
 	}
 }
